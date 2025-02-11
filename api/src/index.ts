@@ -2,7 +2,8 @@ import express, { Request, Response } from "express";
 import { API_PORT } from "./config";
 import cors from "cors";
 import { v1Router } from "./router/v1";
-import logger, { loggingMiddleware } from "./utils/logger";
+import { loggingMiddleware } from "./utils/logger";
+import { logger } from "@repo/common";
 
 const corsOptions = {
   origin: "*",

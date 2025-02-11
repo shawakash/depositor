@@ -1,6 +1,6 @@
+import { logger } from "@repo/common";
 import { Request, Response, NextFunction } from "express";
 import { AnyZodObject } from "zod";
-import logger from "../utils/logger";
 
 export enum ValidateWhere {
   BODY,

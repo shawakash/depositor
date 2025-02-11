@@ -5,7 +5,6 @@ import { Network } from "@repo/common";
 import { derivePath } from "ed25519-hd-key";
 import bs58 from "bs58";
 import { DEPOSITOR_SEED } from "../config";
-import logger from "./logger";
 import { createHash } from "crypto";
 
 // Todo: to deploy the account on the network

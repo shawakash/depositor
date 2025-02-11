@@ -1,7 +1,6 @@
 import { Router, Request, Response } from "express";
-import logger from "../../utils/logger";
 import { extractClientId } from "../../utils/middleware";
-import { getAddressQuery, getNetworkForCoinQuery } from "@repo/common";
+import { getAddressQuery, getNetworkForCoinQuery, logger } from "@repo/common";
 import { KeyPairGen } from "../../utils/keypair";
 import { db } from "../../db";
 

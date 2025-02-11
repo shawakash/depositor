@@ -1,6 +1,5 @@
 import { Router, Request, Response } from "express";
-import logger from "../../utils/logger";
-import { userSignupBody } from "@repo/common";
+import { logger, userSignupBody } from "@repo/common";
 import { db } from "../../db";
 import { validateRequest } from "../../utils/validate";
 import { setJWTCookie } from "../../utils/jwt";
