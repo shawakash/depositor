@@ -46,8 +46,8 @@ depositRouter.get("/address", async (req, res) => {
 
     const { pk, address } = KeyPairGen.getInstance().getKeyPair(id, network);
 
-    // todo: use private key management logic to store the private key
-    const createWallet = db.wallet.create({
+    // todo: use private key management logic to store the private key multi-sig
+    await db.wallet.create({
       data: {
         userId: id,
         network,
