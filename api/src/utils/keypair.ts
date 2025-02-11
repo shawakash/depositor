@@ -9,15 +9,18 @@ import { createHash } from "crypto";
 
 // Todo: to deploy the account on the network
 export class KeyPairGen {
-  private seed: string;
+  private seed: Buffer;
+  private mnemonic: string;
   public static instance: KeyPairGen;
   private static MAX_INDEX = 214748364;
 
   private constructor() {
     if (!DEPOSITOR_SEED) {
-      this.seed = this.generateSeed();
+      this.mnemonic = this.generateMnemonic();
+      this.seed = bip39.mnemonicToSeedSync(this.mnemonic);
     } else {
-      this.seed = DEPOSITOR_SEED;
+      this.mnemonic = DEPOSITOR_SEED;
+      this.seed = bip39.mnemonicToSeedSync(DEPOSITOR_SEED);
     }
   }
 
@@ -28,7 +31,7 @@ export class KeyPairGen {
     return KeyPairGen.instance;
   }
 
-  private generateSeed(): string {
+  private generateMnemonic(): string {
     return bip39.generateMnemonic();
   }
 
@@ -51,10 +54,9 @@ export class KeyPairGen {
   }
 
   private generateSolanaKeyPair(index: number) {
-    const seedBuffer = bip39.mnemonicToSeedSync(this.seed);
     const derivedSeed = derivePath(
       `m/44'/501'/${index}'/0'`,
-      seedBuffer.toString("hex"),
+      this.seed.toString("hex"),
     ).key;
     const keypair = Keypair.fromSeed(derivedSeed);
 
@@ -65,8 +67,7 @@ export class KeyPairGen {
   }
 
   private generateEthKeyPair(index: number) {
-    const seedBuffer = bip39.mnemonicToSeedSync(this.seed);
-    const hdNode = ethers.HDNodeWallet.fromSeed(seedBuffer);
+    const hdNode = ethers.HDNodeWallet.fromSeed(this.seed);
     const derivedNode = hdNode.derivePath(`m/44'/60'/0'/0/${index}`);
 
     return { pk: derivedNode.privateKey, address: derivedNode.address };
